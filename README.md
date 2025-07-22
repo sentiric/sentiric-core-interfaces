@@ -9,6 +9,7 @@
 **Technologies:**
 *   Language-agnostic (e.g., `.proto` files for Protocol Buffers, `.yaml`/`.json` files for OpenAPI).
 *   Code generation tools (e.g., `protoc`).
+* Protocol Buffers (gRPC) + OpenAPI 3.0	protoc ile ARM derlemesi
 
 **Usage:**
 This is **not a running service**; it's a **shared library/contracts repository**. Other services will include this repository as a development dependency and use its definitions to generate client/server code or to ensure data consistency.
