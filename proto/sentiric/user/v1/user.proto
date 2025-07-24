@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+package sentiric.user.v1;
+
+option go_package = "github.com/sentiric/gen/go/user/v1;userv1";
+
+// UserService, kullanıcı hesaplarını ve kimlik doğrulamasını yönetir.
+service UserService {
+  // Gelen bir çağrının kimliğini doğrular.
+  rpc AuthenticateUser(AuthenticateUserRequest) returns (AuthenticateUserResponse);
+}
+
+message AuthenticateUserRequest {
+  string from_uri = 1; // Arayanın SIP URI'si, örn: "sip:1001@domain.com"
+}
+
+message AuthenticateUserResponse {
+  enum Status {
+    STATUS_UNSPECIFIED = 0;
+    STATUS_OK = 1;
+    STATUS_NOT_FOUND = 2;
+    STATUS_FAILED = 3;
+  }
+  Status status = 1;
+  string user_id = 2;   // Doğrulama başarılıysa, sistemdeki kullanıcı ID'si
+  string tenant_id = 3; // Kullanıcının ait olduğu müşteri ID'si
+}

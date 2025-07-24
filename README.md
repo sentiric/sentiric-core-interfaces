@@ -1,29 +1,34 @@
 # Sentiric Core Interfaces
 
-**Description:** This repository holds shared definitions for API contracts (e.g., gRPC Protocol Buffers files, OpenAPI/Swagger specifications), fundamental data structures, and universal constants used across all Sentiric microservices.
+Bu depo, Sentiric ekosistemindeki tüm mikroservisler arasında paylaşılan API sözleşmelerini (`.proto` dosyaları), temel veri yapılarını ve evrensel sabitleri barındıran **tek doğruluk kaynağıdır.**
 
-**Core Responsibilities:**
-*   Ensuring consistent communication formats and data models between services.
-*   Enabling automated code generation for API clients and servers in various programming languages.
+## Amaç
 
-**Technologies:**
-*   Language-agnostic (e.g., `.proto` files for Protocol Buffers, `.yaml`/`.json` files for OpenAPI).
-*   Code generation tools (e.g., `protoc`).
-* Protocol Buffers (gRPC) + OpenAPI 3.0	protoc ile ARM derlemesi
+*   **Tutarlılık:** Tüm servislerin aynı dil ve veri modelleriyle konuşmasını garanti eder.
+*   **Otomasyon:** Farklı diller (Go, Rust, Python) için gRPC istemci ve sunucu kodlarının otomatik olarak üretilmesini sağlar.
 
-**Usage:**
-This is **not a running service**; it's a **shared library/contracts repository**. Other services will include this repository as a development dependency and use its definitions to generate client/server code or to ensure data consistency.
+## Kullanım
 
-**Local Development:**
-1.  Clone this repository: `git clone https://github.com/sentiric/sentiric-core-interfaces.git`
-2.  Navigate into the directory: `cd sentiric-core-interfaces`
-3.  (Optional: If you have code generation tools configured) Run code generation: `make generate` (or similar command).
+Bu repo, çalışan bir servis değildir; diğer servisler tarafından bir bağımlılık olarak kullanılır.
 
-**Deployment:**
-Not applicable as this is not a deployable service. Changes here require dependent services to be re-compiled and re-deployed.
+### Gerekli Araçlar
 
-**Contributing:**
-We welcome contributions! Please refer to the [Sentiric Governance](https://github.com/sentiric/sentiric-governance) repository for coding standards and contribution guidelines. Strict review for changes is crucial due to broad impact.
+Kod üretebilmek için aşağıdaki araçların sisteminizde kurulu olması gerekir:
+*   `protoc` (Protocol Buffers Compiler)
+*   Go için: `protoc-gen-go`, `protoc-gen-go-grpc`
+*   Python için: `grpcio-tools`
+*   Rust için: `tonic-build` ve `prost-build` (servislerin `build.rs` dosyalarında kullanılır)
 
-**License:**
-This project is licensed under the [License](LICENSE).
+### Kod Üretimi
+
+Tüm diller için kodları üretmek için ana dizinde `make` komutunu çalıştırmanız yeterlidir:
+
+```bash
+# Tüm diller için üret
+make all
+
+# Sadece Go için üret
+make gen-go
+
+# Üretilen dosyaları temizle
+make clean

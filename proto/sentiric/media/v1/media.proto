@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+package sentiric.media.v1;
+
+option go_package = "github.com/sentiric/gen/go/media/v1;mediav1";
+
+// MediaService, gerçek zamanlı medya (RTP) oturumlarını yönetir.
+service MediaService {
+  // Yeni bir medya oturumu için boş bir RTP portu ayırır.
+  rpc AllocatePort(AllocatePortRequest) returns (AllocatePortResponse);
+
+  // Kullanılan bir RTP portunu serbest bırakır.
+  rpc ReleasePort(ReleasePortRequest) returns (ReleasePortResponse);
+}
+
+message AllocatePortRequest {
+  string call_id = 1; // Hangi çağrı için port istendiği (izlenebilirlik için)
+}
+
+message AllocatePortResponse {
+  uint32 rtp_port = 1; // Ayrılan çift sayılı RTP portu
+}
+
+message ReleasePortRequest {
+  uint32 rtp_port = 1;
+}
+
+message ReleasePortResponse {
+  bool success = 1;
+}

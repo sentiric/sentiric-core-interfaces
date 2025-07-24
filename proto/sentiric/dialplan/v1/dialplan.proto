@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+package sentiric.dialplan.v1;
+
+option go_package = "github.com/sentiric/gen/go/dialplan/v1;dialplanv1";
+
+// DialplanService, gelen çağrılar için yönlendirme kararları sağlar.
+service DialplanService {
+  // Belirtilen hedef için yönlendirme planını alır.
+  rpc GetDialplan(GetDialplanRequest) returns (GetDialplanResponse);
+}
+
+message GetDialplanRequest {
+  string to_uri = 1; // Aranan numaranın SIP URI'si
+  string from_uri = 2; // Arayanın SIP URI'si (kaynağa göre yönlendirme için)
+}
+
+message GetDialplanResponse {
+  // Action, çağrı için atılacak bir sonraki adımı tanımlar.
+  message Action {
+    enum Type {
+      TYPE_UNSPECIFIED = 0;
+      ROUTE_TO_AGENT = 1; // Çağrıyı agent-service'e yönlendir (RabbitMQ olayı ile)
+      PLAY_ANNOUNCEMENT = 2; // Bir anons çal
+      REJECT = 3; // Çağrıyı reddet
+    }
+    Type type = 1;
+    map<string, string> parameters = 2; // Eylem parametreleri, örn: {"announcement_id": "welcome_message"}
+  }
+
+  repeated Action actions = 1; // Yönlendirme planı, bir veya daha fazla eylemden oluşabilir.
+}
