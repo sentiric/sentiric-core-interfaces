@@ -1,42 +1,32 @@
-.PHONY: all clean gen-go gen-rust gen-python
+PROTO_DIR := proto
 
-# Araçlar - Geliştiricinin bunları kurduğu varsayılır.
-PROTOC = protoc
-# Go
-GO_OUT_DIR = ../gen/go
-# Rust
-RUST_OUT_DIR = ../gen/rust
-# Python
-PYTHON_OUT_DIR = ../gen/python
+PROTO_FILES := \
+  $(PROTO_DIR)/sentiric/dialplan/v1/dialplan.proto \
+  $(PROTO_DIR)/sentiric/media/v1/media.proto \
+  $(PROTO_DIR)/sentiric/user/v1/user.proto
 
-# Tüm diller için kod üretir
-all: gen-go gen-rust gen-python
+.PHONY: all gen-go gen-python gen-rust clean
 
-# Go için kod üretir
+all: gen-go gen-python gen-rust
+	@echo "Tüm diller için protobuf dosyaları üretildi."
+
 gen-go:
-	@echo "Generating Go stubs..."
-	@mkdir -p $(GO_OUT_DIR)
-	$(PROTOC) --proto_path=proto \
-		--go_out=$(GO_OUT_DIR) --go_opt=paths=source_relative \
-		--go-grpc_out=$(GO_OUT_DIR) --go-grpc_opt=paths=source_relative \
-		proto/sentiric/**/*.proto
+	if not exist gen\go mkdir gen\go
+	protoc -I=$(PROTO_DIR) --go_out=gen/go --go_opt=paths=source_relative --go-grpc_out=gen/go --go-grpc_opt=paths=source_relative $(PROTO_FILES)
+	@echo "Go kodları üretildi."
 
-# Rust için kod üretir (tonic-build ile)
-gen-rust:
-	@echo "Generating Rust stubs... (Note: Rust generation is typically handled by build.rs)"
-	@echo "To generate manually for inspection, you'd use tonic_build."
-	@echo "This target is a placeholder. Add a build.rs to each Rust service instead."
-
-# Python için kod üretir
 gen-python:
-	@echo "Generating Python stubs..."
-	@mkdir -p $(PYTHON_OUT_DIR)
-	python -m grpc_tools.protoc --proto_path=proto \
-		--python_out=$(PYTHON_OUT_DIR) \
-		--grpc_python_out=$(PYTHON_OUT_DIR) \
-		proto/sentiric/**/*.proto
+	if not exist gen\python mkdir gen\python
+	python -m grpc_tools.protoc -I=$(PROTO_DIR) --python_out=gen/python --grpc_python_out=gen/python $(PROTO_FILES)
+	@echo "Python kodları üretildi."
 
-# Üretilen tüm dosyaları temizler
+gen-rust:
+	if not exist gen\rust mkdir gen\rust
+	protoc -I=$(PROTO_DIR) --rust_out=gen/rust --rust_opt=kernel=upb,experimental-codegen=enabled $(PROTO_FILES)
+	@echo "Rust kodları üretildi (temel protobuf)."
+
 clean:
-	@echo "Cleaning generated files..."
-	@rm -rf ../gen
+	if exist gen\go rmdir /s /q gen\go
+	if exist gen\python rmdir /s /q gen\python
+	if exist gen\rust rmdir /s /q gen\rust
+	@echo "Üretilen dosyalar temizlendi."

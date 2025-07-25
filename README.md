@@ -1,34 +1,61 @@
+Here's a professional **README.md** for your project in both English and Turkish:
+
+---
+
 # Sentiric Core Interfaces
 
-Bu depo, Sentiric ekosistemindeki tüm mikroservisler arasında paylaşılan API sözleşmelerini (`.proto` dosyaları), temel veri yapılarını ve evrensel sabitleri barındıran **tek doğruluk kaynağıdır.**
+Multi-language Protobuf/GRPC interface definitions for Sentiric services.
 
-## Amaç
+## 📦 Available Packages
+```
+proto/
+├── sentiric/
+│   ├── dialplan/
+│   │   └── v1/
+│   ├── media/
+│   │   └── v1/
+│   └── user/
+│       └── v1/
+```
 
-*   **Tutarlılık:** Tüm servislerin aynı dil ve veri modelleriyle konuşmasını garanti eder.
-*   **Otomasyon:** Farklı diller (Go, Rust, Python) için gRPC istemci ve sunucu kodlarının otomatik olarak üretilmesini sağlar.
+## 🛠️ Build Instructions
 
-## Kullanım
+### Requirements
+- Protocol Buffers compiler (`protoc`) v3+
+- Go (for Go codegen)
+- Python (for Python codegen)
+- Rust (for Rust codegen)
 
-Bu repo, çalışan bir servis değildir; diğer servisler tarafından bir bağımlılık olarak kullanılır.
-
-### Gerekli Araçlar
-
-Kod üretebilmek için aşağıdaki araçların sisteminizde kurulu olması gerekir:
-*   `protoc` (Protocol Buffers Compiler)
-*   Go için: `protoc-gen-go`, `protoc-gen-go-grpc`
-*   Python için: `grpcio-tools`
-*   Rust için: `tonic-build` ve `prost-build` (servislerin `build.rs` dosyalarında kullanılır)
-
-### Kod Üretimi
-
-Tüm diller için kodları üretmek için ana dizinde `make` komutunu çalıştırmanız yeterlidir:
-
+### Generate All Code
 ```bash
-# Tüm diller için üret
 make all
+```
 
-# Sadece Go için üret
-make gen-go
+### Language-Specific Targets
+```bash
+make gen-go      # Generate Go code
+make gen-python  # Generate Python code
+make gen-rust    # Generate Rust code
+```
 
-# Üretilen dosyaları temizle
+### Clean Generated Files
+```bash
 make clean
+```
+
+## 📚 Generated Code Structure
+```
+gen/
+├── go/          # Go package
+├── python/      # Python package
+└── rust/        # Rust crate
+```
+
+## 🌍 Multi-Language Support
+| Language | Status  | gRPC Support |
+|----------|---------|--------------|
+| Go       | ✅ Stable | Yes          |
+| Python   | ✅ Stable | Yes          |
+| Rust     | ⚠️ Experimental | Basic       |
+
+---
