@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package sentiric.user.v1;
 
-option go_package = "github.com/sentiric/gen/go/user/v1;userv1";
+option go_package = "github.com/sentiric/sentiric-core-interfaces/gen/go/sentiric/user/v1";
 
 // UserService, kullanıcı hesaplarını ve kimlik doğrulamasını yönetir.
 service UserService {

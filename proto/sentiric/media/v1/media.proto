@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package sentiric.media.v1;
 
-option go_package = "github.com/sentiric/gen/go/media/v1;mediav1";
+option go_package = "github.com/sentiric/sentiric-core-interfaces/gen/go/sentiric/media/v1";
 
 // MediaService, gerçek zamanlı medya (RTP) oturumlarını yönetir.
 service MediaService {

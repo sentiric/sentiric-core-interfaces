@@ -1,35 +1,53 @@
-# If you prefer the allow list template instead of the deny list, see community template:
-# https://github.com/github/gitignore/blob/main/community/Golang/Go.AllowList.gitignore
-#
-# Binaries for programs and plugins
-*.exe
-*.exe~
-*.dll
-*.so
-*.dylib
+# OS tarafından oluşturulan dosyalar
+.DS_Store
+Thumbs.db
 
-# Test binary, built with `go test -c`
-*.test
+# Protoc generate edilmiş kod (output klasörleri)
+go/gen/
+rust/src/*.rs    # Eğer rust/src içine generate ediliyorsa (sadece gen dosyalarını tutun)
+nodejs/src/
+python/src/
 
-# Code coverage profiles and other test artifacts
-*.out
-coverage.*
-*.coverprofile
-profile.cov
+# Python sanal ortam
+.venv/
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
 
-# Dependency directories (remove the comment below to include it)
-# vendor/
+# Node.js bağımlılıkları ve derlemeleri
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 
-# Go workspace file
-go.work
-go.work.sum
+# Go mod vendor (eğer vendor kullanılıyorsa)
+vendor/
 
-# env file
-.env
+# Rust target klasörü
+target/
 
-# Editor/IDE
-# .idea/
-# .vscode/
+# IDE ayar dosyaları (VSCode, IntelliJ, vs)
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
 
+# Log dosyaları
+*.log
 
-/gen/
+# Proje derleme dosyaları (varsa)
+build/
+dist/
+
+# Windows Powershell profil (opsiyonel)
+Microsoft.PowerShell_profile.ps1
+
+# MacOS
+.AppleDouble
+.LSOverride
+
+# Temporary files
+*.swp
+*~

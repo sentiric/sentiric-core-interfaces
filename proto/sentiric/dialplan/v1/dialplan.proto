@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package sentiric.dialplan.v1;
 
-option go_package = "github.com/sentiric/gen/go/dialplan/v1;dialplanv1";
+option go_package = "github.com/sentiric/sentiric-core-interfaces/gen/go/sentiric/dialplan/v1";
 
 // DialplanService, gelen çağrılar için yönlendirme kararları sağlar.
 service DialplanService {
